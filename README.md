@@ -11,6 +11,6 @@ Use the following prefixes in your commit messages to provide a clear and consis
 - **Refactor**: Used for commits that involve code refactoring without changing functionality.
 - **Perf**: Used for commits that improve performance.
 - **Build**: Used for commits related to build system or tooling changes.
-- **Revert**: Used for commits that revert previous changes..
+- **Revert**: Used for commits that revert previous changes.
 
 By using these prefixes, you can provide clear indications of the purpose and nature of your commits, making it easier for others to understand and review your code changes.
