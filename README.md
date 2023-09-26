@@ -13,4 +13,4 @@ Use the following prefixes in your commit messages to provide a clear and consis
 - **Build**: Used for commits related to build system or tooling changes.
 - **Revert**: Used for commits that revert previous changes.
 
-By using these prefixes, you can provide clear indications of the purpose and nature of your commits, making it easier for others to understand and review your code changes.
+By using these prefixes, you can provide clear indications of the purpose and nature of your commits, making it easier for others to understand and review your code changes..
