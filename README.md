@@ -1,6 +1,6 @@
 # To start server
 - npm run dev
-  
+
 # Commit Message Prefixes
 
 Use the following prefixes in your commit messages to provide a clear and consistent format:
