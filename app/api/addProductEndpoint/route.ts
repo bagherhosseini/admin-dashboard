@@ -4,7 +4,9 @@ import { z } from "zod";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-    const { title, price, description, img, categoryId, archived, featured, sizeId } = await req.json();
+    const { title, price, description, img, categoryId, archived, featured, sizeId } 
+    : 
+    {title: string, price: number, description: string, img: string, categoryId: number, archived: boolean, featured : boolean, sizeId: number } = await req.json();
 
     // Define a schema to validate the request body against
     const ProductValidation = z.object({
