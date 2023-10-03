@@ -82,7 +82,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       });
     } else {
       // Handle other errors here if needed
-      return new Response(JSON.stringify({ error: "An error occurred" }), {
+      return new Response(JSON.stringify({ error: "An error occurred", errorMessage: error }), {
         status: 500,
       });
     }
