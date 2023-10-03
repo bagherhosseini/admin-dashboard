@@ -1,23 +1,60 @@
 import { NextRequest, NextResponse } from "next/server";
 import prismadb from "../../../lib/prismadb";
 import { z } from "zod";
-import { title } from "process";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const data = await req.json();
+    const {
+      title,
+      price,
+      description,
+      img,
+      categoryId,
+      archived,
+      featured,
+      sizeId,
+    } = data as {
+      title: string;
+      price: number;
+      description: string;
+      img: string;
+      categoryId: number;
+      archived: boolean;
+      featured: boolean;
+      sizeId: number;
+    };
 
-    if (
-      typeof data.title === "string" &&
-      typeof data.price === "number" &&
-      typeof data.description === "string" &&
-      typeof data.img === "string" &&
-      typeof data.categoryId === "number" &&
-      typeof data.archived === "boolean" &&
-      typeof data.featured === "boolean" &&
-      typeof data.sizeId === "number"
-    ) {
-      const {
+    // Define a schema to validate the request body against
+    const ProductValidation = z.object({
+      title: z.string().min(3),
+      price: z.number(),
+      description: z.string(),
+      img: z.string(),
+      categoryId: z.number(),
+      archived: z.boolean(),
+      featured: z.boolean(),
+      sizeId: z.number(),
+    });
+
+    // Validate the request body against the schema above
+    ProductValidation.parse({
+      title,
+      price,
+      description,
+      img,
+      categoryId,
+      archived,
+      featured,
+      sizeId,
+    });
+
+    // extract the inferred type
+    type ProductValidation = z.infer<typeof ProductValidation>;
+
+    // Create a new product in the database
+    const newProduct = await prismadb.product.create({
+      data: {
         title,
         price,
         description,
@@ -26,62 +63,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
         archived,
         featured,
         sizeId,
-      } = data as {
-        title: string;
-        price: number;
-        description: string;
-        img: string;
-        categoryId: number;
-        archived: boolean;
-        featured: boolean;
-        sizeId: number;
-      };
+      },
+    });
 
-      // Define a schema to validate the request body against
-      const ProductValidation = z.object({
-        title: z.string().min(3),
-        price: z.number(),
-        description: z.string(),
-        img: z.string(),
-        categoryId: z.number(),
-        archived: z.boolean(),
-        featured: z.boolean(),
-        sizeId: z.number(),
-      });
-
-      // Validate the request body against the schema above
-      ProductValidation.parse({
-        title,
-        price,
-        description,
-        img,
-        categoryId,
-        archived,
-        featured,
-        sizeId,
-      });
-
-      // extract the inferred type
-      type ProductValidation = z.infer<typeof ProductValidation>;
-
-      // Create a new product in the database
-      const newProduct = await prismadb.product.create({
-        data: {
-          title,
-          price,
-          description,
-          img,
-          categoryId,
-          archived,
-          featured,
-          sizeId,
-        },
-      });
-
-      return new Response(JSON.stringify({ newProduct, message: "Success" }), {
-        status: 200,
-      });
-    }
+    return new Response(JSON.stringify({ newProduct, message: "Success" }), {
+      status: 200,
+    });
   } catch (error) {
     console.error(error);
 
