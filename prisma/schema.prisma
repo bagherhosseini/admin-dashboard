@@ -8,7 +8,6 @@ datasource db {
   relationMode = "prisma"
 }
 
-<<<<<<< HEAD
 model Basket {
   id        Int      @id @default(autoincrement())
   productId Int
@@ -19,22 +18,6 @@ model Basket {
 
   @@index([orderId], map: "idx_orderId")
   @@index([userId], map: "idx_userId")
-=======
-model Product {
-  id          Int      @id @default(autoincrement())
-  title       String
-  price       Decimal
-  description String
-  img         String
-  createdAt   DateTime @default(now())
-  categoryId  Int
-  archived    Boolean
-  featured    Boolean
-  sizeId      Int
-
-  @@index([categoryId], map: "idx_categoryId")
-  @@index([sizeId], map: "idx_siezeId")
->>>>>>> a3569fcc5a54137355cd8130c1e810dbb8ef417b
 }
 
 model Billboard {
@@ -50,7 +33,6 @@ model Category {
   description String
 }
 
-<<<<<<< HEAD
 model Order {
   id          Int     @id @default(autoincrement())
   userId      Int
@@ -74,8 +56,6 @@ model Product {
   @@index([sizeId], map: "idx_siezeId")
 }
 
-=======
->>>>>>> a3569fcc5a54137355cd8130c1e810dbb8ef417b
 model Size {
   id          Int    @id @default(autoincrement())
   name        String
