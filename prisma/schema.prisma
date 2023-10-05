@@ -1,5 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider     = "mysql"
@@ -7,7 +8,37 @@ datasource db {
   relationMode = "prisma"
 }
 
-generator client {
-  provider = "prisma-client-js"
+model Product {
+  id          Int      @id @default(autoincrement())
+  title       String
+  price       Decimal
+  description String
+  img         String
+  createdAt   DateTime @default(now())
+  categoryId  Int
+  archived    Boolean
+  featured    Boolean
+  sizeId      Int
+
+  @@index([categoryId], map: "idx_categoryId")
+  @@index([sizeId], map: "idx_siezeId")
 }
 
+model Billboard {
+  id        Int      @id @default(autoincrement())
+  title     String
+  img       String
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+}
+
+model Size {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+}
