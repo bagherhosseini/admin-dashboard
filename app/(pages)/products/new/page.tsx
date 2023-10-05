@@ -4,6 +4,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import Link from "next/link"
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
   FormControl,
@@ -33,7 +34,7 @@ const formSchema = z.object({
   description: z.string().min(2, {
     message: "Description must be at least 2 characters.",
   }),
-  price: z.number().min(1, {
+  price: z.coerce.number().min(1, {
     message: "Price must be at least 1.",
   }),
   category: z.string().min(2, {
@@ -42,6 +43,8 @@ const formSchema = z.object({
   size: z.string().min(2, {
     message: "Size must be at least 2 characters.",
   }),
+  featured: z.boolean().default(false).optional(),
+  archived: z.boolean().default(false).optional(),
 });
 
 export default function page() {
@@ -55,6 +58,8 @@ export default function page() {
       price: 0,
       category: "",
       size: "",
+      featured: false,
+      archived: false,
     },
   });
 
@@ -126,10 +131,8 @@ export default function page() {
             <FormItem>
               <FormLabel>Price</FormLabel>
               <FormControl>
-                <Input placeholder="Enter price" {...field} />
+                <Input type="number" placeholder="Enter price" {...field} />
               </FormControl>
-             
-              <FormMessage />
             </FormItem>
           )}
         />
@@ -166,6 +169,50 @@ export default function page() {
               </FormControl>
               
               <FormMessage />
+            </FormItem>
+          )}
+        />
+          <FormField
+          control={form.control}
+          name="featured"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  Featured
+                </FormLabel>
+                <FormDescription>
+                  This product will be featured on the home page.
+                </FormDescription>
+              </div>
+            </FormItem>
+          )}
+        />
+         <FormField
+          control={form.control}
+          name="archived"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  Archived
+                </FormLabel>
+                <FormDescription>
+                  This product will not appear anywhere in the store.
+                </FormDescription>
+              </div>
             </FormItem>
           )}
         />
