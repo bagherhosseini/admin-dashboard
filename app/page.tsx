@@ -1,66 +1,35 @@
-"use client"
+"use client";
 import { UserButton } from "@clerk/nextjs";
-import Link from "next/link";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+import React, { useState } from "react";
 
 export default function Home() {
+  const [state, setState] = useState<string>("");
+
+  const apiReq = async () => {
+    const res = await fetch("/api/addProductEndpoint", {
+      method: "POST",
+      body: JSON.stringify({
+        title: "TEST2",
+        price: 100,
+        description: "test2",
+        img: "scam",
+        categoryId: 1,
+        archived: false,
+        featured: false,
+        sizeId: 1,
+      }),
+    });
+    const json = await res.json();
+    // setState(json);
+    console.log(json);
+  };
+
   return (
-    <div className="bg-zinc-950 dark:bg-white">
-      <UserButton afterSignOutUrl="/"/>
-      <NavigationMenu>
-            <NavigationMenuList>
-                <NavigationMenuItem>
-                    <Link href="/billboards" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                            Billboards
-                        </NavigationMenuLink>
-                    </Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <Link href="/categories" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                            Categories
-                        </NavigationMenuLink>
-                    </Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <Link href="/sizes" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                            Sizes
-                        </NavigationMenuLink>
-                    </Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <Link href="/products" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                            Products
-                        </NavigationMenuLink>
-                    </Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <Link href="/orders" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                            Orders
-                        </NavigationMenuLink>
-                    </Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <Link href="/settings" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                            Settings
-                        </NavigationMenuLink>
-                    </Link>
-                </NavigationMenuItem>
-            </NavigationMenuList>
-        </NavigationMenu>
+    <div>
+      <UserButton afterSignOutUrl="/" />
+      <button onClick={apiReq}>click</button>
+      <input type="text" name="" id="" />
+      {/* <p>{state}</p> */}
     </div>
-  )
+  );
 }
