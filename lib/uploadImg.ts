@@ -17,19 +17,22 @@ export async function uploadImg(img: string,  name: string){
     
     const imgName = `${firstNumber}${time}+${name}`;
 
-    cloudinary.v2.config({ 
-        cloud_name: 'dqmdraaxc', 
-        api_key: '328737299377439', 
-        api_secret: 'E2cU_RfddX4yP5g_w6nFzAPWlno' 
-    });
-    
-    
-    const url = await cloudinary.v2.uploader.upload(img,
-        { public_id: imgName },
-        function(error: any, result: any) {
-            return result.url;
-        }
-    );
-    
-    return url;
+    try{
+        cloudinary.v2.config({ 
+            cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+            api_key: process.env.CLOUDINARY_API_KEY, 
+            api_secret: process.env.CLOUDINARY_API_SECRET 
+        });
+        
+        const url = await cloudinary.v2.uploader.upload(img,
+            { public_id: imgName },
+            function(error: any, result: any) {
+                return result.url;
+            }
+        );
+        
+        return url;
+    }catch(err){
+        return err;
+    }   
 }
