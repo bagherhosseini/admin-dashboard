@@ -26,10 +26,16 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const orders = await prismadb.order.findMany({ where: { storeId: storeId } });
     const productIdArray: number[] = orders.flatMap(item =>
-      item.products.map(product => product.productId)
+      Array.isArray(item.products)
+        ? item.products.map((product: any) => (product && typeof product === 'object' && 'productId' in product) ? product.productId : null)
+        : new Response(JSON.stringify({ errorsMessage: "DB error: order, productIdArray"}), { status: 500,})
     );
 
-    const uniqueProductIdArray: number[] = [...new Set(productIdArray)];
+    // Use a Set to store unique productIds
+    const uniqueProductIdSet = new Set(productIdArray);
+
+    // Convert the Set back to an array to get unique productIds
+    const uniqueProductIdArray = Array.from(uniqueProductIdSet);
 
     const productsResponse = await prismadb.product.findMany({
       where: {
@@ -39,23 +45,31 @@ export async function POST(req: NextRequest, res: NextResponse) {
       }
     });;
 
-    // Create a new object with full product information, excluding productId
     const newResponse = {
       orders: orders.map(order => {
-        const productsWithFullInfo = order.products.map((product: { productId: number }) => {
-          const productInfo = productsResponse.find(p => p.id === product.productId);
-          const { productId, ...productWithoutId } = productInfo;
-          return {
-            ...productWithoutId,
-          };
-        });
-
+        const productsWithFullInfo = Array.isArray(order.products)
+          ? order.products.map((product: any) => {
+              if (product && typeof product === 'object' && 'productId' in product) {
+                const productInfo = productsResponse.find(p => p.id === product.productId);
+                if (productInfo) {
+                  return {
+                    ...productInfo,
+                    quantity: product.quantity, // Include the "quantity" property
+                  };
+                }
+              }
+              return null;
+            })
+          : [];
+    
         return {
           ...order,
-          products: productsWithFullInfo, // Replace products with products with full info, excluding productId
+          products: productsWithFullInfo
         };
       }),
     };
+    
+    
 
     return new Response(JSON.stringify({ Orders: newResponse.orders }), {
       status: 200,
