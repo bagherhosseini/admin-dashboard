@@ -21,6 +21,7 @@ export type OrderColumn = {
   status: string;
   email: string,
   address: string,
+  totalPrice: string;
   createdAt: string;
 }
 
@@ -40,6 +41,10 @@ export const columns: ColumnDef<OrderColumn>[] = [
   {
     accessorKey: "address",
     header: "Address",
+  },
+  {
+    accessorKey: "totalPrice",
+    header: "Total price",
   },
   {
     accessorKey: "createdAt",

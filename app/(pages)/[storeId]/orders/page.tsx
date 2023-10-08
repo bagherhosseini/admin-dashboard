@@ -29,6 +29,7 @@ const OrdersPage = async ({
       isPaid: item.status,
       email: item.email,
       address: item.address,
+      totalPrice: 'SEK ' + item.products.reduce((total, item) => { return total + Number(item.price) }, 0),
       createdAt: format(new Date(item.createdAt), 'do MMMM, yyyy'),
     }));
 
