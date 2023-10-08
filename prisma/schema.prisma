@@ -42,3 +42,24 @@ model Size {
   name        String
   description String
 }
+
+model Basket {
+  id        Int      @id @default(autoincrement())
+  products  Json
+  userId    Int
+  createdAt DateTime @default(now())
+  orderId   Int?
+
+  @@index([orderId], map: "idx_orderId")
+  @@index([userId], map: "idx_userId")
+}
+
+model Order {
+  id        Int      @id @default(autoincrement())
+  products  Json
+  storeId   Int
+  status    String
+  email     String
+  address   String
+  createdAt DateTime @default(now())
+}
