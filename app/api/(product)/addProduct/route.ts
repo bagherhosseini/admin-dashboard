@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import prismadb from "../../../lib/prismadb";
+import prismadb from "../../../../lib/prismadb";
 import { z } from "zod";
 
 export async function POST(req: NextRequest, res: NextResponse) {
