@@ -6,6 +6,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const data = await req.json();
     const {
+      storeId,
       title,
       price,
       description,
@@ -15,6 +16,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       featured,
       sizeId,
     } = data as {
+      storeId: string
       title: string;
       price: number;
       description: string;
@@ -27,6 +29,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     // Define a schema to validate the request body against
     const ProductValidation = z.object({
+      storeId: z.string().min(3),
       title: z.string().min(3),
       price: z.number(),
       description: z.string(),
@@ -39,6 +42,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     // Validate the request body against the schema above
     ProductValidation.parse({
+      storeId,
       title,
       price,
       description,
@@ -55,6 +59,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     // Create a new product in the database
     const newProduct = await prismadb.product.create({
       data: {
+        storeId,
         title,
         price,
         description,
