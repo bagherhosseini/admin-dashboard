@@ -19,9 +19,11 @@ model Product {
   archived    Boolean
   featured    Boolean
   sizeId      Int
+  storeId     String
 
   @@index([categoryId], map: "idx_categoryId")
   @@index([sizeId], map: "idx_siezeId")
+  @@index([storeId])
 }
 
 model Billboard {
@@ -29,26 +31,35 @@ model Billboard {
   title     String
   img       String
   createdAt DateTime @default(now())
+  storeId   String
+
+  @@index([storeId])
 }
 
 model Category {
   id          Int    @id @default(autoincrement())
   name        String
   description String
+  storeId     String
+
+  @@index([storeId])
 }
 
 model Size {
   id          Int    @id @default(autoincrement())
   name        String
   description String
+  storeId     String
+
+  @@index([storeId])
 }
 
 model Basket {
   id        Int      @id @default(autoincrement())
-  products  Json
   userId    Int
   createdAt DateTime @default(now())
   orderId   Int?
+  products  Json
 
   @@index([orderId], map: "idx_orderId")
   @@index([userId], map: "idx_userId")
@@ -56,10 +67,20 @@ model Basket {
 
 model Order {
   id        Int      @id @default(autoincrement())
-  products  Json
-  storeId   Int
+  storeId   String   @default("f47ac10b-58cc-4372-a567-0e02b2c3d479")
   status    String
-  email     String
+  products  Json
   address   String
   createdAt DateTime @default(now())
+  email     String
+
+  @@index([storeId])
+}
+
+model Store {
+  id        String   @id
+  name      String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
 }
