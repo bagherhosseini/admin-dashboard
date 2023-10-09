@@ -11,7 +11,7 @@ const OrdersPage = async ({
   const ordersFetch = async () => {
     try {
       const response = await axios.post("http://localhost:3000/api/order", {
-        storeId: parseInt(params.storeId)
+        storeId: params.storeId
       });
       return response.data.Orders;
     } catch (error) {

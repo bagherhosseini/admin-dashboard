@@ -8,12 +8,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const {
       storeId
     } = data as {
-      storeId: number;
+      storeId: string;
     };
 
     // Define a schema to validate the request body against
     const ProductValidation = z.object({
-      storeId: z.number().min(1),
+      storeId: z.string().min(1),
     });
 
     // Validate the request body against the schema above
