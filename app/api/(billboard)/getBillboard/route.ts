@@ -1,9 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import prismadb from "../../../../lib/prismadb";
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest, res: NextResponse) {
   try {
-    const billboard = await prismadb.billboard.findMany({});
+    const data = await req.json();
+    const { storeId } = data as {
+      storeId: string;
+    };
+
+    const billboard = await prismadb.billboard.findMany({ where: { storeId } });
     return new Response(JSON.stringify({ billboard }), {
       status: 200,
     });
