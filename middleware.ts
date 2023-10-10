@@ -7,6 +7,8 @@ export default authMiddleware({
     "/api/order",
     "/api/getProductById",
     "/api/addBillboard",
+    "/api/getBillboard",
+    "/api/deleteBillboard",
   ],
 });
 
