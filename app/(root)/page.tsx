@@ -30,7 +30,7 @@ const Page = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setLoading(true);
-      const response = await axios.post('/api/store', values);
+      const response = await axios.post('/api/createStore', values);
       window.location.assign(`/${response.data.store.id}`);
     } catch (error) {
       console.log(error);
