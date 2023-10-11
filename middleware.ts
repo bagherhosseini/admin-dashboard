@@ -9,6 +9,7 @@ export default authMiddleware({
     "/api/addBillboard",
     "/api/getBillboard",
     "/api/deleteBillboard",
+    "/api/createStore",
   ],
 });
 
