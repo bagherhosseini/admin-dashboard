@@ -3,7 +3,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
-import { toast } from "react-hot-toast";
+import toast, { Toaster } from 'react-hot-toast';
 import { useParams, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -73,6 +73,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <Toaster />
     </>
   );
 };

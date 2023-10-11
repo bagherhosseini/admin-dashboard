@@ -7,7 +7,6 @@ import * as z from "zod"
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
 import { useState } from "react";
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form"
@@ -15,6 +14,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox"
+
+import toast, { Toaster } from 'react-hot-toast';
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -47,7 +48,8 @@ const CreateSize = ({
     try {
       setLoading(true);
       const response = await axios.post('/api/addSize', values);
-      toast.success('You have added a size')
+      toast.success('You have added a size');
+      window.location.assign(`/${params.storeId}/sizes`);
     } catch (error) {
       console.log(error);
       toast.error('Something went wrong');
@@ -95,6 +97,7 @@ const CreateSize = ({
           </div>
         </form>
       </Form>
+      <Toaster />
     </section>
   )
 }
