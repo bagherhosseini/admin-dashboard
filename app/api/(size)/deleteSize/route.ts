@@ -1,27 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import prismadb from "../../../../lib/prismadb";
 
+
+//Function to delete a size
 export async function DELETE(req: NextRequest, res: NextResponse) {
   try {
-    const { storeId, id } = await req.json();
-    
+    const { sizeId } = await req.json();
 
-    // Perform the deletion using prismadb
-    const deletedSize = await prismadb.size.delete({ where: 
-        { storeId, id  } });
-    
-    // Check if any rows were deleted
-    if (deletedSize) {
-      return new Response(JSON.stringify({ message: "Size deleted successfully" }), {
-        status: 200,
-      });
-    } else {
-      return new Response(JSON.stringify({ message: "No size found to delete" }), {
-        status: 404,
-      });
+    if (!sizeId) {
+      return new Response(
+        JSON.stringify({ error: "Size ID is required" }),
+        {
+          status: 400,
+        }
+      );
     }
+
+    await prismadb.size.delete({ where: { id: sizeId } });
+
+    return new Response(JSON.stringify({ message: "Successfully deleted" }), {
+      status: 200,
+    });
+    //catches errors
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return new Response(
       JSON.stringify({ error: "An error occurred", errorMessage: error }),
       {
