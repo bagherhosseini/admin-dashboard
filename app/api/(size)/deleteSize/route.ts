@@ -3,10 +3,12 @@ import prismadb from "../../../../lib/prismadb";
 
 export async function DELETE(req: NextRequest, res: NextResponse) {
   try {
-    const { id } = await req.json();
+    const { storeId, id } = await req.json();
+    
+
     // Perform the deletion using prismadb
     const deletedSize = await prismadb.size.delete({ where: 
-        { id: id  } });
+        { storeId, id  } });
     
     // Check if any rows were deleted
     if (deletedSize) {
