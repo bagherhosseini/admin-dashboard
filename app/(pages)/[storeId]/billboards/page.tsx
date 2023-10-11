@@ -12,7 +12,6 @@ const BillboardPage = async ({ params }: { params: { storeId: string } }) => {
           storeId: params.storeId,
         }
       );
-      console.log(response.data.billboard);
       return response.data.billboard;
     } catch (error) {
       console.error("Error fetching orders:", error);
