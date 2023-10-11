@@ -19,28 +19,27 @@ const OrdersPage = async ({
       throw error;
     }
   };
-  
+
   const orders = await ordersFetch();
 
-  if(orders.length !== 0) {
-    const formattedOrders: OrderColumn[] = orders.map((item: OrderColumn) => ({
-      id: item.id,
-      products: item.products.map((orderItem) => orderItem.title).join(', '),
-      isPaid: item.status,
-      email: item.email,
-      address: item.address,
-      totalPrice: 'SEK ' + item.products.reduce((total, item) => { return total + Number(item.price) }, 0),
-      createdAt: format(new Date(item.createdAt), 'do MMMM, yyyy'),
-    }));
+  const formattedOrders: OrderColumn[] = orders.map((item: OrderColumn) => ({
+    id: item.id,
+    products: item.products.map((orderItem) => orderItem.title).join(', '),
+    isPaid: item.status,
+    email: item.email,
+    address: item.address,
+    totalPrice: 'SEK ' + item.products.reduce((total, item) => { return total + Number(item.price) }, 0),
+    createdAt: format(new Date(item.createdAt), 'do MMMM, yyyy'),
+  }));
 
-    return (
-      <div className="flex-col">
-        <div className="flex-1 space-y-4 p-8 pt-6">
-          <OrderClient data={formattedOrders} />
-        </div>
+  return (
+    <div className="flex-col">
+      <div className="flex-1 space-y-4 p-8 pt-6">
+        <OrderClient data={formattedOrders} />
       </div>
-    );
-  }
+    </div>
+  );
+
 };
 
 export default OrdersPage;
