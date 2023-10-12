@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
+import ImageUpload from "../../../../../components/uploadImg";
 
 import {
   Form,
@@ -72,10 +73,14 @@ const CreatBillboard = ({ params }: { params: { storeId: string } }) => {
             name="img"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Image</FormLabel>
+                <FormLabel>Background image</FormLabel>
                 <FormControl>
-                  {/* <Input id="picture" type="file" placeholder="Upload image" {...field} /> */}
-                  <Input placeholder="Image" {...field} />
+                  <ImageUpload
+                    value={field.value ? [field.value] : []}
+                    disabled={loading}
+                    onChange={(url) => field.onChange(url)}
+                    onRemove={() => field.onChange("")}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
