@@ -6,11 +6,8 @@ import { format } from "date-fns";
 const BillboardPage = async ({ params }: { params: { storeId: string } }) => {
   const billboardFetch = async () => {
     try {
-      const response = await axios.post(
+      const response = await axios.get(
         `https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/getBillboard`,
-        {
-          storeId: params.storeId,
-        }
       );
       return response.data.billboard;
     } catch (error) {

@@ -10,9 +10,7 @@ const OrdersPage = async ({
 }) => {
   const ordersFetch = async () => {
     try {
-      const response = await axios.post(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/order`, {
-        storeId: params.storeId
-      });
+      const response = await axios.get(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/order`);
       console.log("Orders fetched:", response.data.Orders);
       return response.data.Orders;
     } catch (error) {
