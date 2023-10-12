@@ -5,7 +5,7 @@ import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from 'react-hot-toast';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ImageUpload from "../../../../../components/uploadImg";
 
 import { Heading } from "@/components/ui/heading";
@@ -114,10 +114,8 @@ const CreatProduct = ({
     }
   };
 
-  useEffect(() => {
-    sizeFetch();
-    categoryFetch();
-  }, []);
+  sizeFetch();
+  categoryFetch();
 
   return (
     <section className="px-9 py-6 flex flex-col gap-4 box-border">
