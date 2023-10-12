@@ -15,7 +15,7 @@ export function DeleteButton() {
     if(!storeId) return; 
 
     try {
-      await axios.delete("http://localhost:3000/api/deleteStore", {
+      await axios.delete("https://admin-dashboard-kappa-one.vercel.app/api/deleteStore", {
         data: {
           storeId: storeId
         },
