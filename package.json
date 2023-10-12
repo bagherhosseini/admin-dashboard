@@ -38,6 +38,7 @@
     "eslint-config-next": "13.5.1",
     "lucide-react": "^0.279.0",
     "next": "13.5.1",
+    "next-cloudinary": "^4.24.0",
     "next-themes": "^0.2.1",
     "postcss": "8.4.30",
     "prisma": "^5.3.1",
