@@ -22,7 +22,7 @@ export function Rename() {
       }
 
       try {
-        const response = await fetch(`http://localhost:3000/api/getStoreNameById?storeId=${storeId}`);
+        const response = await fetch(`https://admin-dashboard-kappa-one.vercel.app/api/getStoreNameById?storeId=${storeId}`);
         const data = await response.json();
 
         if (data && data.name) {
