@@ -6,7 +6,6 @@ export async function POST(req: NextRequest, { params }: { params: { storeId: st
   try {
     const data = await req.json();
     const {
-      storeId,
       title,
       price,
       description,
@@ -16,7 +15,6 @@ export async function POST(req: NextRequest, { params }: { params: { storeId: st
       featured,
       sizeId,
     } = data as {
-      storeId: string
       title: string;
       price: number;
       description: string;
@@ -27,14 +25,14 @@ export async function POST(req: NextRequest, { params }: { params: { storeId: st
       sizeId: number;
     };
 
-    if (!params.storeId && params.storeId !== storeId) {
+    if (!params.storeId) {
       return new NextResponse("Store id is required", { status: 400 });
     }
 
     // Create a new product in the database
     const newProduct = await prismadb.product.create({
       data: {
-        storeId,
+        storeId: params.storeId,
         title,
         price,
         description,

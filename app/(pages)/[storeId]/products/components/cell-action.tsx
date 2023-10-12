@@ -32,24 +32,19 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       setLoading(true);
       await axios.delete(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/deleteProduct`, {
         data: {
-          billboardId: data.id,
+          productId: data.id,
         },
       });
-      toast.success("Billboard deleted.");
+      toast.success("Product deleted.");
       router.refresh();
     } catch (error) {
       toast.error(
-        "Make sure you removed all categories using this billboard first."
+        "Something went wrong while deleting the product. Please try again later."
       );
     } finally {
       setOpen(false);
       setLoading(false);
     }
-  };
-
-  const onCopy = (id: string) => {
-    navigator.clipboard.writeText(id);
-    toast.success("Billboard ID copied to clipboard.");
   };
 
   return (
@@ -65,7 +60,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.storeId}/billboards/${data.id}`)
+              router.push(`/${params.storeId}/products/${data.id}`)
             }
           ></DropdownMenuItem>
           <DropdownMenuItem onClick={() => onDelete()}>
