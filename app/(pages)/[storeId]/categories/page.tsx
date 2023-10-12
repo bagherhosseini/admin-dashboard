@@ -9,9 +9,7 @@ const CategoryPage = async ({
 }) => {
   const categoriesFetch = async () => {
     try {
-      const response = await axios.post(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/getCategory`, {
-        storeId: params.storeId
-      });
+      const response = await axios.get(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/getCategory`);
       return response.data
     } catch (error) {
       console.error("Error fetching sizes:", error);
