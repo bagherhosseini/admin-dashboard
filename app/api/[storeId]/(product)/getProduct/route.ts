@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import prismadb from "../../../../lib/prismadb";
+import prismadb from "../../../../../lib/prismadb";
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET( req: NextRequest, { params }: { params: { storeId: string } }) {
   try {
-    const products = await prismadb.product.findMany({});
+    if (!params.storeId) {
+      return new NextResponse("Store id is required", { status: 400 });
+    }
+    const products = await prismadb.product.findMany({ where: { storeId: params.storeId } });
     return new Response(JSON.stringify({ products }), {
       status: 200,
     });

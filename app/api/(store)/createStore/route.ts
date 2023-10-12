@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from '@clerk/nextjs';
 
-import prismadb from '@/lib/prismadb';
+import prismadb from "../../../../lib/prismadb";
 
 export async function POST(req: NextRequest, res: NextResponse) {
     try {
@@ -16,6 +16,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
             data: {
                 name,
                 userId,
+                updatedAt: new Date(),
             }
         });
 

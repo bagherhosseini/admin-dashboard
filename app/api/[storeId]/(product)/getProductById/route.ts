@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import prismadb from "../../../../lib/prismadb";
+import prismadb from "../../../../../lib/prismadb";
 import { z } from "zod";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest, { params }: { params: { storeId: string } }){
     try{
+        if (!params.storeId) {
+            return new NextResponse("Store id is required", { status: 400 });
+        }
         const data = await req.json();
         const {
             productId
@@ -26,7 +29,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
         const products = await prismadb.product.findUnique({
             where: {
-                id: productId
+                id: productId,
+                storeId : params.storeId
             }
         });
         

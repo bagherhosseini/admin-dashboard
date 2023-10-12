@@ -1,30 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import prismadb from "../../../lib/prismadb";
+import prismadb from "../../../../lib/prismadb";
 import { z } from "zod";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function GET( req: NextRequest, { params }: { params: { storeId: string } }) {
   try {
-    const data = await req.json();
-    const {
-      storeId
-    } = data as {
-      storeId: string;
-    };
+    if (!params.storeId) {
+      return new NextResponse("Store id is required", { status: 400 });
+    }
 
-    // Define a schema to validate the request body against
-    const ProductValidation = z.object({
-      storeId: z.string().min(1),
-    });
-
-    // Validate the request body against the schema above
-    ProductValidation.parse({
-      storeId
-    });
-
-    // extract the inferred type
-    type ProductValidation = z.infer<typeof ProductValidation>;
-
-    const orders = await prismadb.order.findMany({ where: { storeId: storeId } });
+    const orders = await prismadb.order.findMany({ where: { storeId: params.storeId } });
     const productIdArray: number[] = orders.flatMap(item =>
       Array.isArray(item.products)
         ? item.products.map((product: any) => (product && typeof product === 'object' && 'productId' in product) ? product.productId : null)
