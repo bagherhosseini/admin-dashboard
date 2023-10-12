@@ -10,7 +10,7 @@ const CategoryPage = async ({
 }) => {
   const categoriesFetch = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/api/getCategory", {
+      const response = await axios.post(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/getCategory`, {
         storeId: params.storeId
       });
       return response.data

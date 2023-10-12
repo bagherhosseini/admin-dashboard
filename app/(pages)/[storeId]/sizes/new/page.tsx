@@ -47,7 +47,7 @@ const CreateSize = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setLoading(true);
-      const response = await axios.post('/api/addSize', values);
+      const response = await axios.post(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/addSize`, values);
       toast.success('You have added a size');
       window.location.assign(`/${params.storeId}/sizes`);
     } catch (error) {

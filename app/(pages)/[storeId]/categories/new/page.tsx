@@ -45,7 +45,7 @@ const CreateCategory = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setLoading(true);
-      const response = await axios.post('/api/addCategory', values);
+      const response = await axios.post(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/addCategory`, values);
       toast.success('You have added a new category');
       window.location.assign(`/${params.storeId}/categories`);
     } catch (error) {
