@@ -15,10 +15,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { ProductColumn } from "./columns";
+import { CategoryColumn } from "./columns";
 
 interface CellActionProps {
-  data: ProductColumn;
+  data: CategoryColumn;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -30,12 +30,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/deleteProduct`, {
+      await axios.delete(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/deleteCategory`, {
         data: {
           billboardId: data.id,
         },
       });
-      toast.success("Billboard deleted.");
+      toast.success("Category deleted.");
       router.refresh();
     } catch (error) {
       toast.error(
@@ -49,7 +49,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Billboard ID copied to clipboard.");
+    toast.success("Category ID copied to clipboard.");
   };
 
   return (
@@ -65,7 +65,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.storeId}/billboards/${data.id}`)
+              router.push(`/${params.storeId}/categories/${data.id}`)
             }
           ></DropdownMenuItem>
           <DropdownMenuItem onClick={() => onDelete()}>

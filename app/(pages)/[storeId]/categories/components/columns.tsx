@@ -1,4 +1,6 @@
 "use client"
+import axios from "axios";
+import { CellAction } from "./cell-action";
 
 import { ColumnDef } from "@tanstack/react-table"
 
@@ -16,6 +18,10 @@ export const columns: ColumnDef<CategoryColumn>[] = [
   {
     accessorKey: "description",
     header: "Description",
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => <CellAction data={row.original} />,
   },
   
 ];

@@ -9,7 +9,7 @@ const SizesPage = async ({
 }) => {
   const sizesFetch = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/api/getSize", {
+      const response = await axios.post(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/getSize`, {
         storeId: params.storeId
       });
       return response.data
