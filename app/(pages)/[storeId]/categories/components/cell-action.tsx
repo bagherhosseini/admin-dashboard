@@ -32,7 +32,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       setLoading(true);
       await axios.delete(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/deleteCategory`, {
         data: {
-          billboardId: data.id,
+          id: data.id,
         },
       });
       toast.success("Category deleted.");
