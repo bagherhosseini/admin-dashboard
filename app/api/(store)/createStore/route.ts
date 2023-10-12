@@ -5,7 +5,8 @@ import prismadb from "../../../../lib/prismadb";
 
 export async function POST(req: NextRequest, res: NextResponse) {
     try {
-        const { userId } = auth();
+        // const { userId } = auth();
+        const userId = "123";
         const { name } = await req.json();
 
         if (!userId) {
@@ -16,6 +17,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
             data: {
                 name,
                 userId,
+                updatedAt: new Date(),
             }
         });
 
