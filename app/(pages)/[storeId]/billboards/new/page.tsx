@@ -46,7 +46,7 @@ const CreatBillboard = ({ params }: { params: { storeId: string } }) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setLoading(true);
-      const response = await axios.post("/api/addBillboard", values);
+      const response = await axios.post(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/addBillboard`, values);
       toast.success("You have successfully created a billboard");
       window.location.assign(`/${params.storeId}/billboards`);
     } catch (error) {

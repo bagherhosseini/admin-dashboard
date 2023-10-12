@@ -10,7 +10,7 @@ const ProductsPage = async ({
 }) => {
   const productsFetch = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/api/getProduct", {
+      const response = await axios.post(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/getProduct`, {
         storeId: params.storeId
       });
       return response.data.products;

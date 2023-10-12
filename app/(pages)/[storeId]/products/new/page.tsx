@@ -73,7 +73,7 @@ const CreatProduct = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setLoading(true);
-      const response = await axios.post('/api/addProduct', values);
+      const response = await axios.post(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/addProduct`, values);
       window.location.assign(`/${params.storeId}/products`);
       toast.success('You have added product')
     } catch (error) {
