@@ -10,23 +10,6 @@ export type CategoryColumn = {
   description: string,
 }
 
-const handleDelete = async (id: number) => {
-  try {
-    const response = await axios.delete(
-      "http://localhost:3000/api/deleteCategory",
-      {
-        data: {
-          billboardId: id,
-        },
-      }
-    );
-    return response.data.billboard;
-  } catch (error) {
-    console.error("Error fetching orders:", error);
-    throw error;
-  }
-};
-
 export const columns: ColumnDef<CategoryColumn>[] = [
   {
     accessorKey: "name",
