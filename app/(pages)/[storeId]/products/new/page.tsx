@@ -1,15 +1,14 @@
 "use client";
 
-import { Heading } from "@/components/ui/heading";
-
-import { cn } from "@/lib/utils"
 import * as z from "zod"
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
-import { useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
+import { useState, useEffect } from "react";
+import ImageUpload from "../../../../../components/uploadImg";
 
+import { Heading } from "@/components/ui/heading";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select"
 import { Input } from "@/components/ui/input";
@@ -19,7 +18,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 const formSchema = z.object({
   img: z.string().min(1, {
     message: "Price must be at least 1.",
-  }),
+  }).optional(),
   title: z.string().min(1, {
     message: "Product name must be at least 2 characters.",
   }),
@@ -42,22 +41,30 @@ const formSchema = z.object({
   }),
 });
 
+type Category = {
+  id: number,
+  name: string,
+  description: string,
+}
+
 const CreatProduct = ({
   params
 }: {
   params: { storeId: string }
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [categories, setCategories] = useState<Category[]>([{ id: 1, name: 'test', description: 'dasda' }, { id: 2, name: 'test2', description: 'dasdasda' }]);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      img: "test",
-      title: "test",
-      description: "test",
-      price: 10,
-      categoryId: 3,
-      sizeId: 3,
-      featured: true,
+      img: "",
+      title: "",
+      description: "",
+      price: 0,
+      categoryId: 0,
+      sizeId: 0,
+      featured: false,
       archived: false,
       storeId: params.storeId
     },
@@ -67,6 +74,7 @@ const CreatProduct = ({
     try {
       setLoading(true);
       const response = await axios.post('/api/addProduct', values);
+      window.location.assign(`/${params.storeId}/products`);
       toast.success('You have added product')
     } catch (error) {
       console.log(error);
@@ -74,26 +82,46 @@ const CreatProduct = ({
     } finally {
       setLoading(false);
     }
-  }
+  };
+
+  const categoryFetch = async () => {
+    try {
+      const response = await axios.post("http://localhost:3000/api/getCategory", {
+        storeId: params.storeId
+      });
+      setCategories(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    categoryFetch();
+  }, []);
 
   return (
     <section className="px-9 py-6 flex flex-col gap-4 box-border">
-      <Heading title={`Create product`} description="Add a new product"/>
+      <Heading title={`Create product`} description="Add a new product" />
 
       <hr />
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-x-8 gap-y-4 grid-cols-3">
           <FormField
-
             control={form.control}
             name="img"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Image</FormLabel>
+                <FormLabel>Background image</FormLabel>
                 <FormControl>
-                  {/* <Input id="picture" type="file" placeholder="Upload image" {...field} /> */}
-                  <Input placeholder="Image" {...field} />
+                  <ImageUpload
+                    value={field.value ? [field.value] : []}
+                    disabled={loading}
+                    onChange={(url) => field.onChange(url)}
+                    onRemove={() => field.onChange('')}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -119,7 +147,7 @@ const CreatProduct = ({
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter description" {...field}/>
+                  <Input placeholder="Enter description" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -132,7 +160,7 @@ const CreatProduct = ({
               <FormItem>
                 <FormLabel>Price</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="Enter price" {...field}/>
+                  <Input type="number" placeholder="Enter price" {...field} />
                 </FormControl>
               </FormItem>
             )}
@@ -144,7 +172,19 @@ const CreatProduct = ({
               <FormItem>
                 <FormLabel>Category</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="Enter category" {...field} />
+                  <Select onValueChange={field.onChange}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categories.map((category: Category) => (
+                        <SelectItem key={category.id} value={category.id.toString()}>{category.name}</SelectItem>
+                      )
+                      )}
+                    </SelectContent>
+                  </Select>
                 </FormControl>
               </FormItem>
             )}
@@ -156,7 +196,19 @@ const CreatProduct = ({
               <FormItem>
                 <FormLabel>Size</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter product size" {...field} />
+                  <Select onValueChange={field.onChange}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a size" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categories.map((category: Category) => (
+                        <SelectItem key={category.id} value={category.id.toString()}>{category.name}</SelectItem>
+                      )
+                      )}
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -212,6 +264,7 @@ const CreatProduct = ({
           </div>
         </form>
       </Form>
+      <Toaster />
     </section>
   )
 }
