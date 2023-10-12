@@ -47,13 +47,21 @@ type Category = {
   description: string,
 }
 
+type Size = {
+  id: number,
+  name: string,
+  description: string,
+}
+
+
 const CreatProduct = ({
   params
 }: {
   params: { storeId: string }
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [categories, setCategories] = useState<Category[]>([{ id: 1, name: 'test', description: 'dasda' }, { id: 2, name: 'test2', description: 'dasdasda' }]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [sizes, setSizes] = useState<Size[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -86,9 +94,7 @@ const CreatProduct = ({
 
   const categoryFetch = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/api/getCategory", {
-        storeId: params.storeId
-      });
+      const response = await axios.get(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/getCategory`);
       setCategories(response.data);
       return response.data;
     } catch (error) {
@@ -97,7 +103,19 @@ const CreatProduct = ({
     }
   };
 
+  const sizeFetch = async () => {
+    try {
+      const response = await axios.get(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/getSize`);
+      setSizes(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+      throw error;
+    }
+  };
+
   useEffect(() => {
+    sizeFetch();
     categoryFetch();
   }, []);
 
@@ -203,8 +221,8 @@ const CreatProduct = ({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {categories.map((category: Category) => (
-                        <SelectItem key={category.id} value={category.id.toString()}>{category.name}</SelectItem>
+                      {sizes.map((size: Size) => (
+                        <SelectItem key={size.id} value={size.id.toString()}>{size.name}</SelectItem>
                       )
                       )}
                     </SelectContent>
