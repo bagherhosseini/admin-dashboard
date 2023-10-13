@@ -4,7 +4,7 @@ import { z } from "zod";
 
 export async function POST(req: NextRequest, { params }: { params: { storeId: string } }) {
   try {
-    const { storeId, name, description } = await req.json();
+    const { storeId, name, description, billboardId } = await req.json();
 
     if (!params.storeId && params.storeId !== storeId) {
       return new NextResponse("Store id is required", { status: 400 });
@@ -15,6 +15,7 @@ export async function POST(req: NextRequest, { params }: { params: { storeId: st
       storeId: z.string().min(3),
       name: z.string().min(3),
       description: z.string(),
+      billboardId: z.number().min(1),
     });
 
     // Validate the request body against the schema.
@@ -22,6 +23,7 @@ export async function POST(req: NextRequest, { params }: { params: { storeId: st
       storeId,
       name,
       description,
+      billboardId,
     });
 
     // Create a new product in the database.
