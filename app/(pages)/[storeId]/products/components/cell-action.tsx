@@ -58,11 +58,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem
-            onClick={() =>
-              router.push(`/${params.storeId}/products/${data.id}`)
-            }
-          ></DropdownMenuItem>
           <DropdownMenuItem onClick={() => onDelete()}>
             <Trash className="mr-2 h-4 w-4" /> Delete
           </DropdownMenuItem>
