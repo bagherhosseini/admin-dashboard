@@ -41,7 +41,9 @@ model Category {
   name        String
   description String
   storeId     String
+  billboardId  Int?
 
+  @@index([billboardId], map: "idx_billboardId")
   @@index([storeId])
 }
 
