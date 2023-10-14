@@ -11,7 +11,7 @@ export async function POST(req: NextRequest, { params }: { params: { storeId: st
     }
     // Create a new product in the database.
     const newCategory = await prismadb.category.create({
-      data: {storeId, name, description, billboardId}
+      data: { storeId, name, description, billboardId }
     });
 
     return new Response(
@@ -22,26 +22,12 @@ export async function POST(req: NextRequest, { params }: { params: { storeId: st
     );
   } catch (error) {
     console.error(error);
-
-    if (error instanceof z.ZodError) {
-      // If it's a ZodError (validation error), extract the messages and return them in the response.
-      const validationMessages = error.errors.map(
-        (validationError) => validationError.message
-      );
-      return new Response(
-        JSON.stringify({ errors: validationMessages[0] }),
-        {
-          status: 400,
-        }
-      );
-    } else {
-      // Handle other errors here if needed.
-      return new Response(
-        JSON.stringify({ error: "An error occurred", errorMessage: error }),
-        {
-          status: 500,
-        }
-      );
-    }
+    // Handle other errors here if needed.
+    return new Response(
+      JSON.stringify({ error: "An error occurred", errorMessage: error }),
+      {
+        status: 500,
+      }
+    );
   }
 }
