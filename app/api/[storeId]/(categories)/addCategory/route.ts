@@ -9,26 +9,9 @@ export async function POST(req: NextRequest, { params }: { params: { storeId: st
     if (!params.storeId && params.storeId !== storeId) {
       return new NextResponse("Store id is required", { status: 400 });
     }
-
-    // Define a schema to validate the request body.
-    const CategoryValidation = z.object({
-      storeId: z.string().min(3),
-      name: z.string().min(3),
-      description: z.string(),
-      billboardId: z.number().min(1),
-    });
-
-    // Validate the request body against the schema.
-    const validatedData = CategoryValidation.parse({
-      storeId,
-      name,
-      description,
-      billboardId,
-    });
-
     // Create a new product in the database.
     const newCategory = await prismadb.category.create({
-      data: validatedData,
+      data: {storeId, name, description, billboardId}
     });
 
     return new Response(
