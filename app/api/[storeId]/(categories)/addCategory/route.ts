@@ -4,14 +4,14 @@ import { z } from "zod";
 
 export async function POST(req: NextRequest, { params }: { params: { storeId: string } }) {
   try {
-    const { storeId, name, description, billboardId } = await req.json();
+    const { name, description, billboardId } = await req.json();
 
-    if (!params.storeId && params.storeId !== storeId) {
+    if (!params.storeId) {
       return new NextResponse("Store id is required", { status: 400 });
     }
     // Create a new product in the database.
     const newCategory = await prismadb.category.create({
-      data: { name, description, storeId, billboardId }
+      data: { name, description, storeId: params.storeId, billboardId }
     });
 
     return new Response(
