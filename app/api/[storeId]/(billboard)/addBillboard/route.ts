@@ -3,6 +3,12 @@ import prismadb from "../../../../../lib/prismadb";
 import { z } from "zod";
 import Cors from "micro-cors";
 
+Cors({
+  origin:
+    `https://admin-dashboard-kappa-one.vercel.app/api/6dbd33e5-0045-4c2f-8d0d-22383b27c5e9/getProduct`,
+  credentials: true,
+});
+
 export async function POST(req: NextRequest, { params }: { params: { storeId: string } }) {
 
   Cors({
