@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import prismadb from "../../../../../lib/prismadb";
 import { z } from "zod";
+import Cors from "micro-cors";
 
 export async function POST(req: NextRequest, { params }: { params: { storeId: string } }) {
+
+  Cors({
+    origin:
+      `https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/getProduct`,
+    credentials: true,
+  });
+
   try {
     const { title, img, storeId } = await req.json();
 
