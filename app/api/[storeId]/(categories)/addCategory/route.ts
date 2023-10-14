@@ -11,7 +11,7 @@ export async function POST(req: NextRequest, { params }: { params: { storeId: st
     }
     // Create a new product in the database.
     const newCategory = await prismadb.category.create({
-      data: { storeId, name, description, billboardId }
+      data: { name, description, storeId, billboardId }
     });
 
     return new Response(
