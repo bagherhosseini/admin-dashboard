@@ -72,9 +72,9 @@ model Order {
   storeId   String   @default("f47ac10b-58cc-4372-a567-0e02b2c3d479")
   status    String
   products  Json
-  address   String
+  address   String   @default("")
   createdAt DateTime @default(now())
-  email     String
+  email     String   @default("")
 
   @@index([storeId])
 }
