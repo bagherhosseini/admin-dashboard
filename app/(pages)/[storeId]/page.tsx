@@ -18,7 +18,7 @@ const Page = async ({
   return (
     <div className="p-8">
       <div className="mb-8">
-        <Heading title={"The APIs functionality."} description='API links for each endpoint.' />
+        <Heading title={"APIs(14)"} description='API links for each endpoint.' />
       </div>
       <div className="border-solid border-2 border-sky-500 my-2">
         <h2 className="text-center my-2">Billboard</h2>
