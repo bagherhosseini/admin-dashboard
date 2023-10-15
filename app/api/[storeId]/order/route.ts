@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import prismadb from "../../../../lib/prismadb";
 import { z } from "zod";
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
 export async function GET( req: NextRequest, { params }: { params: { storeId: string } }) {
   try {
     if (!params.storeId) {
@@ -53,11 +59,7 @@ export async function GET( req: NextRequest, { params }: { params: { storeId: st
       }),
     };
     
-    
-
-    return new Response(JSON.stringify({ Orders: newResponse.orders }), {
-      status: 200,
-    });
+    return new Response(JSON.stringify({ Orders: newResponse.orders }),{headers: corsHeaders});
 
   } catch (error) {
     if (error instanceof z.ZodError) {
