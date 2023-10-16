@@ -51,7 +51,9 @@ export async function POST(
     data: {
       storeId: params.storeId,
       status: "notPaid",
-      products: [{productId: 1, quantity: 1}]
+      products: [productIds.map((productId: number) => (
+        { productId, quantity: 1 }
+      ))],
     }
   });
 
