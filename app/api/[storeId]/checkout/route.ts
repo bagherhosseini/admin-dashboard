@@ -52,7 +52,7 @@ export async function POST(
       storeId: params.storeId,
       status: "notPaid",
       products: [productIds.map((productId: number) => (
-        { productId, quantity: 1 }
+        { productId: productId, quantity: 1 }
       ))],
     }
   });

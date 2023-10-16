@@ -53,8 +53,6 @@ export async function GET( req: NextRequest, { params }: { params: { storeId: st
       }),
     };
     
-    
-
     return new Response(JSON.stringify({ Orders: newResponse.orders }), {
       status: 200,
     });
