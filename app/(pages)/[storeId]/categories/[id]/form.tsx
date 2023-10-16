@@ -5,8 +5,8 @@ import axios from "axios"
 import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import toast, { Toaster } from "react-hot-toast"
-import { Size } from "@prisma/client"
+import toast, {Toaster} from "react-hot-toast"
+import { Category } from "@prisma/client"
 import { useParams, useRouter } from "next/navigation"
 
 import { Input } from "@/components/ui/input"
@@ -28,13 +28,13 @@ const formSchema = z.object({
   description: z.string().min(1),
 });
 
-type SizeFormValues = z.infer<typeof formSchema>
+type CategoryFormValues = z.infer<typeof formSchema>
 
-interface SizeFormProps {
-  initialData: Size | null;
+interface CategoryFormProps {
+  initialData: Category | null;
 };
 
-export const SizeForm: React.FC<SizeFormProps> = ({
+export const CategoryForm: React.FC<CategoryFormProps> = ({
   initialData
 }) => {
   const params = useParams();
@@ -42,12 +42,12 @@ export const SizeForm: React.FC<SizeFormProps> = ({
 
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? 'Edit size' : 'Create size';
-  const description = initialData ? 'Edit a size.' : 'Add a new size';
-  const toastMessage = initialData ? 'Size updated.' : 'Size created.';
+  const title = initialData ? 'Edit Category' : 'Create Category';
+  const description = initialData ? 'Edit a Category.' : 'Add a new Category';
+  const toastMessage = initialData ? 'Category updated.' : 'Category created.';
   const action = initialData ? 'Save changes' : 'Create';
 
-  const form = useForm<SizeFormValues>({
+  const form = useForm<CategoryFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       name: '',
@@ -55,16 +55,16 @@ export const SizeForm: React.FC<SizeFormProps> = ({
     }
   });
 
-  const onSubmit = async (data: SizeFormValues) => {
+  const onSubmit = async (data: CategoryFormValues) => {
     try {
       setLoading(true);
       if (initialData) {
-        await axios.patch(`/api/${params.storeId}/updateSize/${params.id}`, data);
+        await axios.patch(`/api/${params.storeId}/updateCategory/${params.id}`, data);
       } else {
-        await axios.post(`/api/${params.storeId}/addSize`, data);
+        await axios.post(`/api/${params.storeId}/addCategory`, data);
       }
       router.refresh();
-      router.push(`/${params.storeId}/sizes`);
+      router.push(`/${params.storeId}/categories`);
       toast.success(toastMessage);
     } catch (error: any) {
       toast.error('Something went wrong.');
@@ -89,7 +89,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="Size name" {...field} />
+                    <Input disabled={loading} placeholder="Category name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -102,7 +102,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({
                 <FormItem>
                   <FormLabel>description</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="Size Description" {...field} />
+                    <Input disabled={loading} placeholder="Category Description" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -114,6 +114,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({
           </Button>
         </form>
       </Form>
+
       <Toaster />
     </>
   );
