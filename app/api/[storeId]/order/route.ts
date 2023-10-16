@@ -60,21 +60,11 @@ export async function GET( req: NextRequest, { params }: { params: { storeId: st
     });
 
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      // If it's a ZodError (validation error), extract the messages and return them in the response
-      const validationMessages = error.errors.map(
-        (validationError) => validationError.message
-      );
-      return new Response(JSON.stringify({ errors: validationMessages[0] }), {
-        status: 400,
-      });
-    } else {
-      // Handle other errors here if needed
-      console.log(error);
-      return new Response(JSON.stringify({ error: "An error occurred", errorMessage: error }), {
-        status: 500,
-      });
-    }
+    // Handle other errors here if needed
+    console.log(error);
+    return new Response(JSON.stringify({ error: "An error occurred", errorMessage: error }), {
+      status: 500,
+    });
   }
 }
 
