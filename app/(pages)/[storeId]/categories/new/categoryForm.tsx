@@ -58,7 +58,6 @@ export const CreateCategory: React.FC<CategoryFormProps> = ({
         try {
             setLoading(true);
             const response = await axios.post(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/addCategory`, values);
-            console.log(values.billboardId);
             window.location.assign(`/${params.storeId}/categories`);
             toast.success('You have added a category')
         } catch (error) {
