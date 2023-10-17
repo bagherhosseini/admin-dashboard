@@ -5,32 +5,23 @@ import prismadb from "../../../../../../lib/prismadb";
 //Function to delete a size
 export async function PATCH(req: NextRequest, { params }: { params: { id: number } }) {
     try {
-        const { name, description } = await req.json();
+        const { img, title, description, price, categoryId, sizeId, featured, archived, storeId} = await req.json();
         if (!params.id) {
             return new NextResponse("Id is required", { status: 400 });
         }
 
-        if (!name) {
+        if (!img && !title && !description && !price && !categoryId && !sizeId && !featured && !archived && !storeId) {
             return new Response(
-                JSON.stringify({ error: "Name is required" }),
+                JSON.stringify({ error: "Data is missing" }),
                 {
                     status: 400,
                 }
             );
         }
 
-        if (!description) {
-            return new Response(
-                JSON.stringify({ error: "Description is required" }),
-                {
-                    status: 400,
-                }
-            );
-        }
-
-        const size = await prismadb.size.update({
+        const size = await prismadb.product.update({
             where: { id: parseInt(params.id.toString()) },
-            data: { name, description }
+            data: { img, title, description, price, categoryId, sizeId, featured, archived, storeId }
         });
 
         return new Response(JSON.stringify({ message: "Successfully deleted" }), {
