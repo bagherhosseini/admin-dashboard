@@ -18,7 +18,7 @@ const Page = async ({
   return (
     <div className="p-8">
       <div className="mb-8">
-        <Heading title={"The APIs functionality."} description='API links for each endpoint.' />
+        <Heading title={"APIs(14)"} description='API links for each endpoint.' />
       </div>
       <div className="border-solid border-2 border-sky-500 my-2">
         <h2 className="text-center my-2">Billboard</h2>
@@ -114,7 +114,7 @@ const Page = async ({
         </Alert>
         <Alert>
           <Terminal className="h-4 w-4" />
-          <AlertTitle>GET</AlertTitle>
+          <AlertTitle>POST</AlertTitle>
           <AlertDescription>
               <div className="justify-between flex items-center"><code>https://admin-dashboard-kappa-one.vercel.app/api/{params.storeId}/getProductById</code><UrlButton url={`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/getProductById`}></UrlButton></div>
           </AlertDescription>
