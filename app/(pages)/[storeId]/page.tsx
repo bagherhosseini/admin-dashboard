@@ -114,7 +114,7 @@ const Page = async ({
         </Alert>
         <Alert>
           <Terminal className="h-4 w-4" />
-          <AlertTitle>GET</AlertTitle>
+          <AlertTitle>POST</AlertTitle>
           <AlertDescription>
               <div className="justify-between flex items-center"><code>https://admin-dashboard-kappa-one.vercel.app/api/{params.storeId}/getProductById</code><UrlButton url={`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/getProductById`}></UrlButton></div>
           </AlertDescription>
