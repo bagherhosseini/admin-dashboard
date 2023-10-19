@@ -28,6 +28,7 @@ const OrdersPage = async ({
     address: item.address,
     totalPrice: 'SEK ' + item.products.reduce((total, item) => { return total + Number(item.price) }, 0),
     createdAt: format(new Date(item.createdAt), 'do MMMM, yyyy'),
+    isDelivered: item.isDelivered,
   }));
 
   return (

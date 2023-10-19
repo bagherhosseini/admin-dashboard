@@ -23,6 +23,7 @@ export type OrderColumn = {
   address: string,
   totalPrice: string;
   createdAt: string;
+  isDelivered: boolean;
 }
 
 export const columns: ColumnDef<OrderColumn>[] = [
@@ -49,5 +50,9 @@ export const columns: ColumnDef<OrderColumn>[] = [
   {
     accessorKey: "createdAt",
     header: "Created at",
+  },
+  {
+    accessorKey: "isDelivered",
+    header: "Is delivered",
   },
 ];

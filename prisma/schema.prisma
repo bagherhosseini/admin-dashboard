@@ -41,7 +41,7 @@ model Category {
   name        String
   description String
   storeId     String
-  billboardId  Int?
+  billboardId Int?
 
   @@index([billboardId], map: "idx_billboardId")
   @@index([storeId])
@@ -68,13 +68,14 @@ model Basket {
 }
 
 model Order {
-  id        Int      @id @default(autoincrement())
-  storeId   String   @default("f47ac10b-58cc-4372-a567-0e02b2c3d479")
-  status    String
-  products  Json
-  address   String   @default("")
-  createdAt DateTime @default(now())
-  email     String   @default("")
+  id          Int      @id @default(autoincrement())
+  storeId     String   @default("f47ac10b-58cc-4372-a567-0e02b2c3d479")
+  status      String
+  products    Json
+  address     String   @default("")
+  createdAt   DateTime @default(now())
+  email       String   @default("")
+  isDelivered Boolean  @default(false)
 
   @@index([storeId])
 }
