@@ -12,7 +12,8 @@ type Product = {
   categoryId: number,
   archived: boolean,
   featured: boolean,
-  sizeId: number
+  sizeId: number,
+  quantity: number,
 };
 
 export type OrderColumn = {

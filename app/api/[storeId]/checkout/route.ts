@@ -18,9 +18,11 @@ export async function POST(
   req: Request,
   { params }: { params: { storeId: string } }
 ) {
-  const { productIds } = await req.json();
+  const { productInfo } = await req.json();
 
-  if (!productIds || productIds.length === 0) {
+  const productIds = productInfo.map((product: any) => product.id);
+
+  if (!productInfo || productInfo.length === 0) {
     return new NextResponse("Product ids are required", { status: 400 });
   }
 
@@ -36,7 +38,7 @@ export async function POST(
 
   products.forEach((product) => {
     line_items.push({
-      quantity: 1,
+      quantity: productInfo.find((p: any) => p.id === product.id).quantity,
       price_data: {
         currency: 'SEK',
         product_data: {
@@ -51,8 +53,8 @@ export async function POST(
     data: {
       storeId: params.storeId,
       status: "notPaid",
-      products: productIds.map((productId: number) => (
-        { productId: productId, quantity: 1 }
+      products: productInfo.map((product: any) => (
+        { productId: product.id, quantity: product.quantity }
       )),
     }
   });
