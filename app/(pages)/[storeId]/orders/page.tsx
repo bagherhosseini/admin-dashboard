@@ -11,7 +11,6 @@ const OrdersPage = async ({
   const ordersFetch = async () => {
     try {
       const response = await axios.get(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/order`);
-      console.log("Orders fetched:", response.data.Orders);
       return response.data.Orders;
     } catch (error) {
       console.error("Error fetching orders:", error);
@@ -29,6 +28,7 @@ const OrdersPage = async ({
     address: item.address,
     totalPrice: 'SEK ' + item.products.reduce((total, item) => { return total + Number(item.price) }, 0),
     createdAt: format(new Date(item.createdAt), 'do MMMM, yyyy'),
+    isDelivered: item.isDelivered,
   }));
 
   return (
