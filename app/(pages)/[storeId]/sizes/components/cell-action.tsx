@@ -47,10 +47,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     }
   };
 
-  const onCopy = (id: string) => {
-    navigator.clipboard.writeText(id);
-    toast.success("Size ID copied to clipboard.");
-  };
+
 
   return (
     <>
