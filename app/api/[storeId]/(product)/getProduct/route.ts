@@ -4,7 +4,7 @@ import Cors from "micro-cors";
 
 const cors = Cors({
   origin:
-    "https://admin-dashboard-kappa-one.vercel.app/api/f47ac10b-58cc-4372-a567-0e02b2c3d479/getProduct",
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/f47ac10b-58cc-4372-a567-0e02b2c3d479/getProduct`,
   credentials: true,
 });
 

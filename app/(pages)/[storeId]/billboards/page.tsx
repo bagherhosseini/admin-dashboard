@@ -7,7 +7,7 @@ const BillboardPage = async ({ params }: { params: { storeId: string } }) => {
   const billboardFetch = async () => {
     try {
       const response = await axios.get(
-        `https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/getBillboard`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/${params.storeId}/getBillboard`,
       );
       return response.data.billboard;
     } catch (error) {

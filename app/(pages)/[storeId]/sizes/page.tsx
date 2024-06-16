@@ -9,7 +9,7 @@ const SizesPage = async ({
 }) => {
   const sizesFetch = async () => {
     try {
-      const response = await axios.get(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/getSize`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/${params.storeId}/getSize`);
       return response.data
     } catch (error) {
       console.error("Error fetching sizes:", error);

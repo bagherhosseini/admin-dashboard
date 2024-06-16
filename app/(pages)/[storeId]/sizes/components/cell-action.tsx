@@ -30,7 +30,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/deleteSize`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/${params.storeId}/deleteSize`, {
         data: {
           sizeId: data.id,
         },

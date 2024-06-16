@@ -22,7 +22,7 @@ export function Rename() {
       }
 
       try {
-        const response = await fetch(`https://admin-dashboard-kappa-one.vercel.app/api/getStoreNameById?storeId=${storeId}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/getStoreNameById?storeId=${storeId}`);
         const data = await response.json();
 
         if (data && data.name) {
@@ -45,7 +45,7 @@ export function Rename() {
 
     if (storeId && storeName) {
       try {
-        const response = await axios.post('https://admin-dashboard-kappa-one.vercel.app/api/renameStore', 
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/renameStore`, 
         { 
           storeId,
           name: storeName 

@@ -5,7 +5,7 @@ import Cors from "micro-cors";
 
 Cors({
   origin:
-    `https://admin-dashboard-kappa-one.vercel.app/api/6dbd33e5-0045-4c2f-8d0d-22383b27c5e9/getProduct`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/6dbd33e5-0045-4c2f-8d0d-22383b27c5e9/getProduct`,
   credentials: true,
 });
 
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest, { params }: { params: { storeId: st
 
   Cors({
     origin:
-      `https://admin-dashboard-kappa-one.vercel.app/api/${params.storeId}/getProduct`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/${params.storeId}/getProduct`,
     credentials: true,
   });
 
